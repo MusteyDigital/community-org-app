@@ -7,6 +7,9 @@
                 </div>
                 <div class="hidden space-x-1 sm:ms-10 sm:flex sm:items-center">
                     <a href="{{ route('dashboard') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('dashboard') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Dashboard</a>
+                    @if(Auth::user()->is_super_admin)
+                        <a href="{{ route('admin.organizations.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('admin.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Admin</a>
+                    @endif
                     @if(Auth::user()->hasOrganization())
                         <a href="{{ route('members.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('members.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Members</a>
                         <a href="{{ route('events.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('events.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Events</a>
@@ -50,6 +53,9 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-teal-900">
         <div class="pt-2 pb-3 space-y-1 px-2">
             <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('dashboard') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Dashboard</a>
+            @if(Auth::user()->is_super_admin)
+                <a href="{{ route('admin.organizations.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Admin</a>
+            @endif
             @if(Auth::user()->hasOrganization())
                 <a href="{{ route('members.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('members.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Members</a>
                 <a href="{{ route('events.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('events.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Events</a>
@@ -71,3 +77,5 @@
         </div>
     </div>
 </nav>
+
+
