@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contribution extends Model
 {
-    protected $fillable = ['organization_id', 'member_id', 'amount', 'category', 'note', 'contributed_at'];
+    protected $fillable = ['organization_id', 'member_id', 'amount', 'category', 'note', 'contributed_at', 'payment_reference', 'source', 'payment_status'];
 
     protected function casts(): array
     {

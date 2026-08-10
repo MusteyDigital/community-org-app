@@ -16,6 +16,8 @@
                     </div>
                     @if($isAdmin)
                         <a href="{{ route('contributions.create') }}" class="px-4 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg">+ Record Contribution</a>
+                    @else
+                        <a href="{{ route('paystack.pay') }}" class="px-4 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg">Make a Contribution</a>
                     @endif
                 </div>
 
@@ -62,4 +64,5 @@
         </div>
     </div>
 </x-app-layout>
+
 

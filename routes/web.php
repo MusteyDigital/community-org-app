@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('events', EventItemController::class)->except(['show']);
     Route::resource('announcements', AnnouncementController::class)->except(['show']);
     Route::resource('contributions', App\Http\Controllers\ContributionController::class)->except(['show']);
+    Route::get('/contributions/pay/start', [App\Http\Controllers\PaystackController::class, 'pay'])->name('paystack.pay');
+    Route::post('/contributions/pay/initialize', [App\Http\Controllers\PaystackController::class, 'initialize'])->name('paystack.initialize');
+    Route::get('/contributions/pay/callback', [App\Http\Controllers\PaystackController::class, 'callback'])->name('paystack.callback');
     Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
     Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
     Route::post('/organizations', [OrganizationController::class, 'store'])->name('organizations.store');
@@ -60,4 +63,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
 
