@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/members/{member}/reject', [MemberController::class, 'reject'])->name('members.reject');
     Route::resource('events', EventItemController::class)->except(['show']);
     Route::resource('announcements', AnnouncementController::class)->except(['show']);
+    Route::resource('contributions', App\Http\Controllers\ContributionController::class)->except(['show']);
     Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
     Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
     Route::post('/organizations', [OrganizationController::class, 'store'])->name('organizations.store');
@@ -59,3 +60,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
