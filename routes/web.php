@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MemberController;
@@ -51,6 +51,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/contributions/pay/start', [App\Http\Controllers\PaystackController::class, 'pay'])->name('paystack.pay');
     Route::post('/contributions/pay/initialize', [App\Http\Controllers\PaystackController::class, 'initialize'])->name('paystack.initialize');
     Route::get('/contributions/pay/callback', [App\Http\Controllers\PaystackController::class, 'callback'])->name('paystack.callback');
+    Route::get('/organizations/payout', [App\Http\Controllers\OrganizationPayoutController::class, 'edit'])->name('organizations.payout.edit');
+    Route::post('/organizations/payout/resolve', [App\Http\Controllers\OrganizationPayoutController::class, 'resolve'])->name('organizations.payout.resolve');
+    Route::post('/organizations/payout', [App\Http\Controllers\OrganizationPayoutController::class, 'update'])->name('organizations.payout.update');
     Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
     Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
     Route::post('/organizations', [OrganizationController::class, 'store'])->name('organizations.store');
@@ -63,5 +66,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
 
 

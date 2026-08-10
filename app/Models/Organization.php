@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Organization extends Model
 {
-    protected $fillable = ['name', 'slug', 'type', 'description', 'address', 'created_by', 'status'];
+    protected $fillable = ['name', 'slug', 'type', 'description', 'address', 'created_by', 'status', 'bank_code', 'bank_name', 'account_number', 'account_name', 'paystack_subaccount_code'];
 
     protected static function boot()
     {
@@ -50,5 +50,10 @@ class Organization extends Model
     public function scopeApproved($query)
     {
         return $query->where('status', 'approved');
+    }
+
+    public function hasPayoutSetup(): bool
+    {
+        return ! empty($this->paystack_subaccount_code);
     }
 }

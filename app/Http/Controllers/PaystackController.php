@@ -15,22 +15,23 @@ class PaystackController extends Controller
     private function currentMembership()
     {
         $membership = Member::where('user_id', Auth::id())->where('status', 'approved')->first();
-
         abort_unless($membership, 403, 'You must be an approved member of an organization to do this.');
-
         return $membership;
     }
 
     public function pay()
     {
-        $this->currentMembership();
-
-        return view('contributions.pay');
+        $membership = $this->currentMembership();
+        $organization = $membership->organization;
+        return view('contributions.pay', compact('organization'));
     }
 
     public function initialize(Request $request)
     {
         $membership = $this->currentMembership();
+        $organization = $membership->organization;
+
+        abort_unless($organization->hasPayoutSetup(), 422, 'This organization has not set up payouts yet. Please contact your admin.');
 
         $validated = $request->validate([
             'amount' => 'required|numeric|min:100',
@@ -45,6 +46,8 @@ class PaystackController extends Controller
                 'amount' => (int) round($validated['amount'] * 100),
                 'reference' => $reference,
                 'callback_url' => route('paystack.callback'),
+                'subaccount' => $organization->paystack_subaccount_code,
+                'bearer' => 'subaccount',
                 'metadata' => [
                     'member_id' => $membership->id,
                     'organization_id' => $membership->organization_id,
@@ -63,7 +66,6 @@ class PaystackController extends Controller
     public function callback(Request $request)
     {
         $reference = $request->query('reference');
-
         if (! $reference) {
             return redirect()->route('contributions.index')->with('error', 'Missing payment reference.');
         }
