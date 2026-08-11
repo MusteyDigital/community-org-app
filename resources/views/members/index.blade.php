@@ -3,29 +3,29 @@
         <h2 class="font-display font-semibold text-xl text-ink">Members</h2>
     </x-slot>
     <div class="py-8">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white rounded-xl border border-sand-200 p-6">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-xl border border-sand-200 p-4 sm:p-6">
                 @if(session('success'))
                     <div class="mb-4 p-3 bg-teal-50 border border-teal-200 text-teal-800 rounded-lg text-sm">{{ session('success') }}</div>
                 @endif
-                <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
-                    <a href="{{ route('members.create') }}" class="px-4 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg">+ Add Member</a>
+                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+                    <a href="{{ route('members.create') }}" class="px-4 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg text-center">+ Add Member</a>
                     <form method="GET" action="{{ route('members.index') }}" class="flex flex-wrap items-end gap-2">
-                        <div>
+                        <div class="flex-1 min-w-[140px]">
                             <label class="block text-xs text-sand-500 mb-1">Search</label>
-                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Name or email" class="border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Name or email" class="w-full border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
                         </div>
-                        <div>
+                        <div class="flex-1 min-w-[100px]">
                             <label class="block text-xs text-sand-500 mb-1">Role</label>
-                            <select name="role" class="border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
+                            <select name="role" class="w-full border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
                                 <option value="">All</option>
                                 <option value="member" {{ request('role') == 'member' ? 'selected' : '' }}>Member</option>
                                 <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="flex-1 min-w-[100px]">
                             <label class="block text-xs text-sand-500 mb-1">Status</label>
-                            <select name="status" class="border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
+                            <select name="status" class="w-full border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
                                 <option value="">All</option>
                                 <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
                                 <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
@@ -38,26 +38,27 @@
                         @endif
                     </form>
                 </div>
+                <div class="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="border-b border-sand-200">
-                            <th class="py-2 font-mono text-xs uppercase tracking-widest text-teal-700">Name</th>
-                            <th class="py-2 font-mono text-xs uppercase tracking-widest text-teal-700">Email</th>
-                            <th class="py-2 font-mono text-xs uppercase tracking-widest text-teal-700">Phone</th>
-                            <th class="py-2 font-mono text-xs uppercase tracking-widest text-teal-700">Role</th>
-                            <th class="py-2 font-mono text-xs uppercase tracking-widest text-teal-700">Status</th>
-                            <th class="py-2 font-mono text-xs uppercase tracking-widest text-teal-700">Joined</th>
-                            <th class="py-2 font-mono text-xs uppercase tracking-widest text-teal-700">Actions</th>
+                            <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Name</th>
+                            <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Email</th>
+                            <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Phone</th>
+                            <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Role</th>
+                            <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Status</th>
+                            <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Joined</th>
+                            <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($members as $member)
                         <tr class="border-b border-sand-100">
-                            <td class="py-3 text-ink font-medium">{{ $member->name }}</td>
-                            <td class="py-3 text-teal-800">{{ $member->email }}</td>
-                            <td class="py-3 font-mono text-sm text-ink">{{ $member->phone }}</td>
-                            <td class="py-3"><span class="text-xs px-2 py-1 rounded-full {{ $member->role == 'admin' ? 'bg-gold-500/20 text-gold-700' : 'bg-teal-800/10 text-teal-800' }}">{{ $member->role }}</span></td>
-                            <td class="py-3">
+                            <td class="py-3 pr-4 text-ink font-medium whitespace-nowrap">{{ $member->name }}</td>
+                            <td class="py-3 pr-4 text-teal-800 whitespace-nowrap">{{ $member->email }}</td>
+                            <td class="py-3 pr-4 font-mono text-sm text-ink whitespace-nowrap">{{ $member->phone }}</td>
+                            <td class="py-3 pr-4 whitespace-nowrap"><span class="text-xs px-2 py-1 rounded-full {{ $member->role == 'admin' ? 'bg-gold-500/20 text-gold-700' : 'bg-teal-800/10 text-teal-800' }}">{{ $member->role }}</span></td>
+                            <td class="py-3 pr-4 whitespace-nowrap">
                                 @if($member->status === 'approved')
                                     <span class="text-xs px-2 py-1 rounded-full bg-teal-800/10 text-teal-800">Approved</span>
                                 @elseif($member->status === 'pending')
@@ -66,7 +67,7 @@
                                     <span class="text-xs px-2 py-1 rounded-full bg-sand-200 text-sand-500">Rejected</span>
                                 @endif
                             </td>
-                            <td class="py-3 font-mono text-sm text-ink">{{ $member->join_date }}</td>
+                            <td class="py-3 pr-4 font-mono text-sm text-ink whitespace-nowrap">{{ $member->join_date }}</td>
                             <td class="py-3 whitespace-nowrap">
                                 @if($member->status === 'pending')
                                     <form action="{{ route('members.approve', $member) }}" method="POST" class="inline">
@@ -91,6 +92,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                </div>
                 <div class="mt-4">{{ $members->links() }}</div>
             </div>
         </div>

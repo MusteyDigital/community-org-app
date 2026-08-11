@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -10,9 +10,9 @@
 </head>
 <body class="bg-sand-50 text-ink font-sans antialiased">
     <header class="bg-teal-900 text-sand-50">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <a href="{{ url('/') }}" class="font-display font-bold text-lg">{{ config('app.name', 'Community Org') }}</a>
-            <nav class="flex items-center gap-4 text-sm">
+            <nav class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
                 @auth
                     <a href="{{ url('/dashboard') }}" class="px-4 py-1.5 rounded-md bg-gold-500 text-teal-900 font-medium hover:bg-gold-600 transition">Dashboard</a>
                 @else
@@ -44,3 +44,4 @@
     </footer>
 </body>
 </html>
+

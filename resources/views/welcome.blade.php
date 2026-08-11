@@ -10,9 +10,9 @@
 </head>
 <body class="bg-sand-50 text-ink font-sans antialiased">
     <header class="bg-teal-900 text-sand-50">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:py-5">
             <a href="{{ url('/') }}" class="font-display font-bold text-lg">{{ config('app.name', 'Community Org') }}</a>
-            <nav class="flex items-center gap-4 text-sm">
+            <nav class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
                 <a href="{{ url('/browse') }}" class="text-sand-200 hover:text-white transition">Browse Organizations</a>
                 @auth
                     <a href="{{ url('/dashboard') }}" class="px-4 py-1.5 rounded-md bg-gold-500 text-teal-900 font-medium hover:bg-gold-600 transition">Dashboard</a>
@@ -24,18 +24,18 @@
         </div>
     </header>
     <section class="relative overflow-hidden bg-teal-900 text-sand-50" style="background-image: repeating-linear-gradient(45deg, rgba(201,151,63,0.08) 0px, rgba(201,151,63,0.08) 2px, transparent 2px, transparent 12px);">
-        <div class="max-w-4xl mx-auto px-6 lg:px-8 py-24 text-center">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 py-16 sm:py-24 text-center">
             <p class="font-mono text-sm text-gold-500 uppercase tracking-widest mb-3">For churches, mosques &amp; community groups</p>
-            <h1 class="font-display text-4xl sm:text-5xl font-bold">Run your community, all in one place</h1>
-            <p class="text-sand-200 mt-5 max-w-xl mx-auto text-lg">Manage members, share events, and post announcements &mdash; with a public page your community can check anytime, no login required.</p>
-            <div class="mt-8 flex items-center justify-center gap-4">
-                <a href="{{ route('register') }}" class="px-6 py-3 rounded-md bg-gold-500 text-teal-900 font-medium hover:bg-gold-600 transition">Register your organization</a>
-                <a href="{{ url('/browse') }}" class="px-6 py-3 rounded-md border border-sand-400 text-sand-100 font-medium hover:bg-teal-800 transition">Browse organizations</a>
+            <h1 class="font-display text-3xl sm:text-5xl font-bold">Run your community, all in one place</h1>
+            <p class="text-sand-200 mt-5 max-w-xl mx-auto text-base sm:text-lg">Manage members, share events, and post announcements &mdash; with a public page your community can check anytime, no login required.</p>
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="{{ route('register') }}" class="w-full sm:w-auto px-6 py-3 rounded-md bg-gold-500 text-teal-900 font-medium hover:bg-gold-600 transition text-center">Register your organization</a>
+                <a href="{{ url('/browse') }}" class="w-full sm:w-auto px-6 py-3 rounded-md border border-sand-400 text-sand-100 font-medium hover:bg-teal-800 transition text-center">Browse organizations</a>
             </div>
         </div>
     </section>
-    <main class="max-w-7xl mx-auto px-6 lg:px-8 py-16 space-y-14">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10 sm:space-y-14">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center">
             <div class="bg-white rounded-xl border border-sand-200 p-6">
                 <p class="font-display text-3xl font-bold text-teal-900">{{ $organizationCount }}</p>
                 <p class="text-sm text-teal-700 mt-1">Organizations registered</p>
@@ -67,7 +67,7 @@
         @endif
     </main>
     <footer class="border-t border-sand-200 py-6">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center text-sm text-sand-500">&copy; {{ date('Y') }} {{ config('app.name', 'Community Org') }}. All rights reserved.</div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-sand-500">&copy; {{ date('Y') }} {{ config('app.name', 'Community Org') }}. All rights reserved.</div>
     </footer>
 </body>
 </html>
