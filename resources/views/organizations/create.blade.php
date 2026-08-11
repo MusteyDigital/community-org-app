@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <h2 class="font-display font-semibold text-xl text-ink">Register Organization</h2>
     </x-slot>
@@ -33,6 +33,12 @@
                     </div>
 
                     <div class="mt-4">
+                        <x-input-label for="phone" value="Phone Number" />
+                        <x-text-input id="phone" name="phone" type="text" class="block mt-1 w-full" :value="old('phone')" />
+                        <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                    </div>
+
+                    <div class="mt-4">
                         <x-input-label for="description" value="Description" />
                         <textarea id="description" name="description" rows="4" class="block mt-1 w-full border-sand-200 text-ink focus:border-teal-700 focus:ring-teal-700 rounded-md shadow-sm">{{ old('description') }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
@@ -47,3 +53,4 @@
         </div>
     </div>
 </x-app-layout>
+
