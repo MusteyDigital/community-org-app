@@ -25,10 +25,22 @@ class AnnouncementController extends Controller
         abort_unless($membership->role === 'admin', 403, 'Only organization admins can manage announcements.');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $orgId = $this->currentMembership()->organization_id;
-        $announcements = Announcement::where('organization_id', $orgId)->orderByDesc('is_pinned')->latest('published_at')->paginate(10);
+
+        $announcements = Announcement::where('organization_id', $orgId)
+            ->when($request->filled('search'), fn ($q) => $q->where(fn ($q2) => $q2
+                ->where('title', 'like', '%'.$request->search.'%')
+                ->orWhere('body', 'like', '%'.$request->search.'%')
+            ))
+            ->when($request->filled('type'), fn ($q) => $q->where('type', $request->type))
+            ->when($request->filled('pinned'), fn ($q) => $q->where('is_pinned', $request->pinned === '1'))
+            ->orderByDesc('is_pinned')
+            ->latest('published_at')
+            ->paginate(10)
+            ->withQueryString();
+
         return view('announcements.index', compact('announcements'));
     }
 

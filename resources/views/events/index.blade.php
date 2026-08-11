@@ -8,7 +8,27 @@
                 @if(session('success'))
                     <div class="mb-4 p-3 bg-teal-50 border border-teal-200 text-teal-800 rounded-lg text-sm">{{ session('success') }}</div>
                 @endif
-                <a href="{{ route('events.create') }}" class="inline-block mb-6 px-4 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg">+ Add Event</a>
+                <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+                    <a href="{{ route('events.create') }}" class="px-4 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg">+ Add Event</a>
+                    <form method="GET" action="{{ route('events.index') }}" class="flex flex-wrap items-end gap-2">
+                        <div>
+                            <label class="block text-xs text-sand-500 mb-1">Search</label>
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Title or location" class="border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-sand-500 mb-1">From</label>
+                            <input type="date" name="from" value="{{ request('from') }}" class="border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-sand-500 mb-1">To</label>
+                            <input type="date" name="to" value="{{ request('to') }}" class="border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
+                        </div>
+                        <button type="submit" class="px-3 py-2 bg-teal-800 hover:bg-teal-900 text-white text-sm font-medium rounded-lg">Filter</button>
+                        @if(request()->anyFilled(['search', 'from', 'to']))
+                            <a href="{{ route('events.index') }}" class="px-3 py-2 text-teal-700 text-sm font-medium">Clear</a>
+                        @endif
+                    </form>
+                </div>
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="border-b border-sand-200">
@@ -35,7 +55,7 @@
                             </td>
                         </tr>
                         @empty
-                        <tr><td colspan="5" class="py-6 text-sand-500">No events yet.</td></tr>
+                        <tr><td colspan="5" class="py-6 text-sand-500">No events match your filters.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
