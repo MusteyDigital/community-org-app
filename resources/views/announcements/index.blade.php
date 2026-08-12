@@ -46,7 +46,7 @@
                                 @if($announcement->is_pinned)<span class="text-xs bg-gold-500/20 text-gold-700 px-2 py-1 rounded-full ml-2">Pinned</span>@endif
                                 <span class="text-xs {{ $announcement->type === 'burial' ? 'bg-clay-600/10 text-clay-700' : 'bg-teal-800/10 text-teal-800' }} px-2 py-1 rounded-full ml-1">{{ $announcement->type === 'burial' ? 'Burial Notice' : 'General' }}</span>
                             </h3>
-                            <p class="text-teal-800 mt-1">{{ $announcement->body }}</p>
+                            <p class="text-teal-800 mt-1 whitespace-pre-line">{{ $announcement->body }}</p>
                             <p class="font-mono text-xs text-sand-500 mt-2">{{ $announcement->published_at }}</p>
                         </div>
                         <div class="flex-shrink-0 ml-4">

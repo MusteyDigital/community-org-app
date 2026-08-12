@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -65,7 +65,7 @@
                             <span class="text-xs font-mono uppercase tracking-widest text-gold-600 bg-gold-500/10 rounded px-2 py-0.5">Pinned</span>
                             <p class="font-medium text-ink">{{ $announcement->title }}</p>
                         </div>
-                        <p class="text-sm text-teal-700 mt-1 line-clamp-2">{{ $announcement->body }}</p>
+                        <p class="text-sm text-teal-700 mt-1 line-clamp-2 whitespace-pre-line">{{ $announcement->body }}</p>
                     </div>
                 @empty
                     <p class="text-sand-500 text-sm">No announcements pinned right now.</p>
