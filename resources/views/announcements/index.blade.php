@@ -49,13 +49,15 @@
                             <p class="text-teal-800 mt-1 whitespace-pre-line">{{ $announcement->body }}</p>
                             <p class="font-mono text-xs text-sand-500 mt-2">{{ $announcement->published_at }}</p>
                         </div>
-                        <div class="flex-shrink-0 ml-4">
+                        @if(optional(Auth::user()->approvedMembership)->role === 'admin')
+<div class="flex-shrink-0 ml-4">
                             <a href="{{ route('announcements.edit', $announcement) }}" class="text-teal-700 hover:text-teal-900 font-medium">Edit</a>
                             <form action="{{ route('announcements.destroy', $announcement) }}" method="POST" class="inline" onsubmit="return confirm('Delete this announcement?')">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="text-clay-600 hover:text-clay-700 font-medium ml-3">Delete</button>
                             </form>
                         </div>
+                        @endif
                     </div>
                 </div>
                 @empty
@@ -66,3 +68,6 @@
         </div>
     </div>
 </x-app-layout>
+
+
+
