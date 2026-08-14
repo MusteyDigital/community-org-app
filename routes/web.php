@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MemberController;
@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('members', MemberController::class)->except(['show']);
+    Route::get('/directory', [MemberController::class, 'directory'])->name('members.directory');
+    Route::post('/directory/visibility', [MemberController::class, 'updateVisibility'])->name('members.visibility');
     Route::post('/members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
     Route::post('/members/{member}/reject', [MemberController::class, 'reject'])->name('members.reject');
     Route::resource('events', EventItemController::class)->except(['show']);

@@ -1,4 +1,4 @@
-﻿<nav x-data="{ open: false }" class="bg-teal-900 border-b border-teal-950">
+<nav x-data="{ open: false }" class="bg-teal-900 border-b border-teal-950">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
@@ -11,7 +11,7 @@
                         <a href="{{ route('admin.organizations.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('admin.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Admin</a>
                     @endif
                     @if(Auth::user()->hasOrganization())
-                        <a href="{{ route('members.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('members.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Members</a>
+                        <a href="{{ optional(Auth::user()->approvedMembership)->role === 'admin' ? route('members.index') : route('members.directory') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('members.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Members</a>
                         <a href="{{ route('events.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('events.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Events</a>
                         <a href="{{ route('announcements.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('announcements.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Announcements</a>
                         <a href="{{ route('contributions.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('contributions.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100 hover:bg-teal-800' }}">Contributions</a>
@@ -61,7 +61,7 @@
                 <a href="{{ route('admin.organizations.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Admin</a>
             @endif
             @if(Auth::user()->hasOrganization())
-                <a href="{{ route('members.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('members.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Members</a>
+                <a href="{{ optional(Auth::user()->approvedMembership)->role === 'admin' ? route('members.index') : route('members.directory') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('members.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Members</a>
                 <a href="{{ route('events.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('events.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Events</a>
                 <a href="{{ route('announcements.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('announcements.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Announcements</a>
                 <a href="{{ route('contributions.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('contributions.*') ? 'bg-teal-800 text-gold-500' : 'text-sand-100' }}">Contributions</a>
@@ -82,6 +82,8 @@
         </div>
     </div>
 </nav>
+
+
 
 
 

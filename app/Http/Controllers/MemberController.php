@@ -93,6 +93,25 @@ class MemberController extends Controller
         $member->delete();
         return redirect()->route('members.index')->with('success', 'Member deleted.');
     }
+    public function directory()
+    {
+        $orgId = $this->currentOrgId();
+        $members = Member::where('organization_id', $orgId)
+            ->where('status', 'approved')
+            ->where('is_listed', true)
+            ->orderBy('name')
+            ->get();
+        return view('members.directory', compact('members'));
+    }
+
+    public function updateVisibility(Request $request)
+    {
+        $member = Member::where('user_id', Auth::id())->first();
+        abort_unless($member, 403);
+        $request->validate(['is_listed' => 'required|boolean']);
+        $member->update(['is_listed' => $request->boolean('is_listed')]);
+        return back()->with('status', 'directory-visibility-updated');
+    }
 
     public function approve(Member $member)
     {
@@ -110,3 +129,4 @@ class MemberController extends Controller
         return back()->with('success', "{$member->name} rejected.");
     }
 }
+
