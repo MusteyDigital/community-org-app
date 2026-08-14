@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 
 class Organization extends Model
 {
+    use HasFactory;
     protected $fillable = ['name', 'slug', 'type', 'description', 'address', 'created_by', 'status', 'bank_code', 'bank_name', 'account_number', 'account_name', 'paystack_subaccount_code'];
 
     protected static function boot()
