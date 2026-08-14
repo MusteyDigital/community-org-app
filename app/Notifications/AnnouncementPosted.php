@@ -13,7 +13,7 @@ class AnnouncementPosted extends Notification
     }
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
     public function toMail(object $notifiable): MailMessage
     {
@@ -26,5 +26,15 @@ class AnnouncementPosted extends Notification
             ->line(str_replace("\n", "  \n", $this->announcement->body))
             ->when($org, fn ($mail) => $mail->action('View Organization Page', url('/org/'.$org->slug)))
             ->line('Thank you for being part of our community.');
+    }
+    public function toArray(object $notifiable): array
+    {
+        $org = $this->announcement->organization;
+        return [
+            'type' => 'announcement',
+            'title' => $this->announcement->title,
+            'organization' => $org?->name,
+            'url' => $org ? '/org/'.$org->slug : null,
+        ];
     }
 }

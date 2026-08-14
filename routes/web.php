@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('members', MemberController::class)->except(['show']);
     Route::get('/directory', [MemberController::class, 'directory'])->name('members.directory');
+    Route::post('/notifications/{id}/read', [App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifications.readAll');
     Route::post('/directory/visibility', [MemberController::class, 'updateVisibility'])->name('members.visibility');
     Route::post('/members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
     Route::post('/members/{member}/reject', [MemberController::class, 'reject'])->name('members.reject');
@@ -68,6 +70,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
 
 
 
