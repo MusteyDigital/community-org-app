@@ -30,7 +30,9 @@
                     </tbody>
                 </table>
                 </div>
+                <div class="mt-4">{{ $members->links() }}</div>
             </div>
         </div>
     </div>
 </x-app-layout>
+

@@ -100,7 +100,7 @@ class MemberController extends Controller
             ->where('status', 'approved')
             ->where('is_listed', true)
             ->orderBy('name')
-            ->get();
+            ->paginate(10);
         return view('members.directory', compact('members'));
     }
 
@@ -129,4 +129,5 @@ class MemberController extends Controller
         return back()->with('success', "{$member->name} rejected.");
     }
 }
+
 
