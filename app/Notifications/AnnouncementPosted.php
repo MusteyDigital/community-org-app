@@ -5,7 +5,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
-class AnnouncementPosted extends Notification implements ShouldQueue
+class AnnouncementPosted extends Notification
 {
     use Queueable;
     public function __construct(public Announcement $announcement)
@@ -38,3 +38,4 @@ class AnnouncementPosted extends Notification implements ShouldQueue
         ];
     }
 }
+
