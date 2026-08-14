@@ -51,6 +51,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/members/{member}/reject', [MemberController::class, 'reject'])->name('members.reject');
     Route::resource('events', EventItemController::class)->except(['show']);
     Route::resource('announcements', AnnouncementController::class)->except(['show']);
+    Route::get('/announcements/trashed', [AnnouncementController::class, 'trashed'])->name('announcements.trashed');
+    Route::post('/announcements/{id}/restore', [AnnouncementController::class, 'restore'])->name('announcements.restore');
+    Route::delete('/announcements/{id}/force-delete', [AnnouncementController::class, 'forceDelete'])->name('announcements.forceDelete');
     Route::resource('contributions', App\Http\Controllers\ContributionController::class)->except(['show']);
     Route::get('/contributions/pay/start', [App\Http\Controllers\PaystackController::class, 'pay'])->name('paystack.pay');
     Route::post('/contributions/pay/initialize', [App\Http\Controllers\PaystackController::class, 'initialize'])->name('paystack.initialize');
@@ -70,6 +73,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
 
 
 

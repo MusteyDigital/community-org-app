@@ -117,7 +117,39 @@ class AnnouncementController extends Controller
         $announcement->delete();
         return redirect()->route('announcements.index')->with('success', 'Announcement deleted.');
     }
+
+    public function trashed()
+    {
+        $this->assertIsOrgAdmin();
+        $orgId = $this->currentMembership()->organization_id;
+
+        $announcements = Announcement::onlyTrashed()
+            ->where('organization_id', $orgId)
+            ->latest('deleted_at')
+            ->paginate(10);
+
+        return view('announcements.trashed', compact('announcements'));
+    }
+
+    public function restore($id)
+    {
+        $this->assertIsOrgAdmin();
+        $announcement = Announcement::onlyTrashed()->findOrFail($id);
+        abort_unless($announcement->organization_id === $this->currentMembership()->organization_id, 403);
+        $announcement->restore();
+        return redirect()->route('announcements.trashed')->with('success', 'Announcement restored.');
+    }
+
+    public function forceDelete($id)
+    {
+        $this->assertIsOrgAdmin();
+        $announcement = Announcement::onlyTrashed()->findOrFail($id);
+        abort_unless($announcement->organization_id === $this->currentMembership()->organization_id, 403);
+        $announcement->forceDelete();
+        return redirect()->route('announcements.trashed')->with('success', 'Announcement permanently deleted.');
+    }
 }
+
 
 
 

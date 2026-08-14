@@ -9,7 +9,12 @@
                     <div class="mb-4 p-3 bg-teal-50 border border-teal-200 text-teal-800 rounded-lg text-sm">{{ session('success') }}</div>
                 @endif
                 <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
-                    <a href="{{ route('announcements.create') }}" class="px-4 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg">+ Add Announcement</a>
+                    <div class="flex items-center gap-3">
+                        <a href="{{ route('announcements.create') }}" class="px-4 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg">+ Add Announcement</a>
+                        @if(optional(Auth::user()->approvedMembership)->role === 'admin')
+                            <a href="{{ route('announcements.trashed') }}" class="text-teal-700 hover:text-teal-900 text-sm font-medium">View Trash</a>
+                        @endif
+                    </div>
                     <form method="GET" action="{{ route('announcements.index') }}" class="flex flex-wrap items-end gap-2">
                         <div>
                             <label class="block text-xs text-sand-500 mb-1">Search</label>
@@ -68,6 +73,8 @@
         </div>
     </div>
 </x-app-layout>
+
+
 
 
 
