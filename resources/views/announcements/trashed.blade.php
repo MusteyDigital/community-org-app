@@ -1,4 +1,4 @@
-﻿<x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-display font-semibold text-xl text-ink">Trashed Announcements</h2>
     </x-slot>
