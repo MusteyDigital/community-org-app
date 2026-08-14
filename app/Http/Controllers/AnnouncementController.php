@@ -38,7 +38,7 @@ class AnnouncementController extends Controller
             ->when($request->filled('pinned'), fn ($q) => $q->where('is_pinned', $request->pinned === '1'))
             ->orderByDesc('is_pinned')
             ->latest('published_at')
-            ->paginate(10)
+            ->paginate(3)
             ->withQueryString();
 
         return view('announcements.index', compact('announcements'));
@@ -116,3 +116,4 @@ class AnnouncementController extends Controller
         return redirect()->route('announcements.index')->with('success', 'Announcement deleted.');
     }
 }
+
