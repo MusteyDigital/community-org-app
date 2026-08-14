@@ -61,6 +61,7 @@ class AnnouncementController extends Controller
             'published_at' => 'nullable|date',
             'type' => 'required|in:general,burial',
         ]);
+        $validated['body'] = str_replace("\r\n", "\n", $validated['body']);
         $validated['is_pinned'] = $request->has('is_pinned');
         $validated['published_at'] = $validated['published_at'] ?? now();
         $validated['organization_id'] = $orgId;
@@ -103,6 +104,7 @@ class AnnouncementController extends Controller
             'published_at' => 'nullable|date',
             'type' => 'required|in:general,burial',
         ]);
+        $validated['body'] = str_replace("\r\n", "\n", $validated['body']);
         $validated['is_pinned'] = $request->has('is_pinned');
         $announcement->update($validated);
         return redirect()->route('announcements.index')->with('success', 'Announcement updated successfully.');
@@ -116,4 +118,8 @@ class AnnouncementController extends Controller
         return redirect()->route('announcements.index')->with('success', 'Announcement deleted.');
     }
 }
+
+
+
+
 
