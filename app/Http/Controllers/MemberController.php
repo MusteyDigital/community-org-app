@@ -121,6 +121,14 @@ class MemberController extends Controller
         return back()->with('success', "{$member->name} approved.");
     }
 
+    public function adminUpdateVisibility(Request $request, Member $member)
+    {
+        $this->assertIsOrgAdmin();
+        abort_unless($member->organization_id === $this->currentOrgId(), 403);
+        $request->validate(['is_listed' => 'required|boolean']);
+        $member->update(['is_listed' => $request->boolean('is_listed')]);
+        return back()->with('success', "{$member->name}'s directory visibility updated.");
+    }
     public function reject(Member $member)
     {
         $this->assertIsOrgAdmin();

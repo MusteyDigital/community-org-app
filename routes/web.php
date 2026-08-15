@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/directory/visibility', [MemberController::class, 'updateVisibility'])->name('members.visibility');
     Route::post('/members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
     Route::post('/members/{member}/reject', [MemberController::class, 'reject'])->name('members.reject');
+    Route::post('/members/{member}/visibility', [MemberController::class, 'adminUpdateVisibility'])->name('members.adminVisibility');
     Route::resource('events', EventItemController::class)->except(['show']);
     Route::resource('announcements', AnnouncementController::class)->except(['show']);
     Route::get('/announcements/trashed', [AnnouncementController::class, 'trashed'])->name('announcements.trashed');
