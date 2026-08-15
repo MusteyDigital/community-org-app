@@ -7,6 +7,12 @@
             <div class="bg-white rounded-xl border border-sand-200 p-6">
                 <form method="POST" action="{{ route('announcements.store') }}">
                     @csrf
+                    @if (session('duplicate_warning'))
+                        <div class="mb-4 bg-gold-50 border border-gold-300 text-clay-700 text-sm rounded-lg px-4 py-3">
+                            {{ session('duplicate_warning') }}
+                            <input type="hidden" name="confirm_duplicate" value="1">
+                        </div>
+                    @endif
                     <div class="mb-4">
                         <label class="block font-medium text-sm text-ink mb-1">Title</label>
                         <input type="text" name="title" value="{{ old('title') }}" class="w-full border-sand-200 rounded-lg focus:border-teal-700 focus:ring-teal-700" required>
