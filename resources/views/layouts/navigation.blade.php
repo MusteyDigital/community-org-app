@@ -34,6 +34,7 @@
                         </button>
                     </x-slot>
                     <x-slot name="content">
+                        <x-dropdown-link :href="route('organizations.index')">Browse Organizations</x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">{{ __('Profile') }}</x-dropdown-link>
                         @if(Auth::user()->hasOrganization() && optional(Auth::user()->approvedMembership)->role === 'admin')
                             <x-dropdown-link :href="route('organizations.payout.edit')">Payout Settings</x-dropdown-link>
@@ -75,6 +76,7 @@
             <div class="font-medium text-base text-sand-50">{{ Auth::user()->name }}</div>
             <div class="font-medium text-sm text-sand-200">{{ Auth::user()->email }}</div>
             <div class="mt-3 space-y-1">
+                <a href="{{ route('organizations.index') }}" class="block text-sand-100">Browse Organizations</a>
                 <a href="{{ route('profile.edit') }}" class="block text-sand-100">Profile</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
