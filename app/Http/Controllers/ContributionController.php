@@ -79,6 +79,7 @@ class ContributionController extends Controller
         $member = Member::findOrFail($validated['member_id']);
         abort_unless($member->organization_id === $orgId, 403);
 
+        $validated['note'] = $validated['note'] ? str_replace("\r\n", "\n", $validated['note']) : $validated['note'];
         $validated['organization_id'] = $orgId;
 
         Contribution::create($validated);
@@ -113,6 +114,7 @@ class ContributionController extends Controller
         $member = Member::findOrFail($validated['member_id']);
         abort_unless($member->organization_id === $contribution->organization_id, 403);
 
+        $validated['note'] = $validated['note'] ? str_replace("\r\n", "\n", $validated['note']) : $validated['note'];
         $contribution->update($validated);
 
         return redirect()->route('contributions.index')->with('success', 'Contribution updated successfully.');
@@ -128,3 +130,5 @@ class ContributionController extends Controller
         return redirect()->route('contributions.index')->with('success', 'Contribution deleted.');
     }
 }
+
+

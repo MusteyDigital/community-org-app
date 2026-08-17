@@ -57,6 +57,7 @@ class EventItemController extends Controller
             'event_time' => 'nullable',
             'location' => 'nullable|string|max:255',
         ]);
+        $validated['description'] = $validated['description'] ? str_replace("\r\n", "\n", $validated['description']) : $validated['description'];
         $validated['created_by'] = Auth::id();
         $validated['organization_id'] = $orgId;
         EventItem::create($validated);
@@ -81,6 +82,7 @@ class EventItemController extends Controller
             'event_time' => 'nullable',
             'location' => 'nullable|string|max:255',
         ]);
+        $validated['description'] = $validated['description'] ? str_replace("\r\n", "\n", $validated['description']) : $validated['description'];
         $event->update($validated);
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
@@ -93,3 +95,5 @@ class EventItemController extends Controller
         return redirect()->route('events.index')->with('success', 'Event deleted.');
     }
 }
+
+
