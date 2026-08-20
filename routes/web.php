@@ -83,4 +83,8 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::get('/auth/google', [App\Http\Controllers\Auth\GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'callback'])->name('google.callback');
+
 require __DIR__.'/auth.php';
+
