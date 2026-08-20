@@ -32,8 +32,17 @@
                                 <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
                             </select>
                         </div>
+                        <div class="flex-1 min-w-[90px]">
+                            <label class="block text-xs text-sand-500 mb-1">Per page</label>
+                            <select name="per_page" class="w-full border-sand-200 rounded-lg text-sm focus:border-teal-700 focus:ring-teal-700">
+                                <option value="5" {{ request('per_page') == '5' ? 'selected' : '' }}>5</option>
+                                <option value="10" {{ request('per_page', '10') == '10' ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ request('per_page') == '25' ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ request('per_page') == '50' ? 'selected' : '' }}>50</option>
+                            </select>
+                        </div>
                         <button type="submit" class="px-3 py-2 bg-teal-800 hover:bg-teal-900 text-white text-sm font-medium rounded-lg">Filter</button>
-                        @if(request()->anyFilled(['search', 'role', 'status']))
+                        @if(request()->anyFilled(['search', 'role', 'status', 'per_page']))
                             <a href="{{ route('members.index') }}" class="px-3 py-2 text-teal-700 text-sm font-medium">Clear</a>
                         @endif
                     </form>
@@ -98,3 +107,4 @@
         </div>
     </div>
 </x-app-layout>
+

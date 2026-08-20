@@ -46,6 +46,25 @@
                     </div>
                 </div>
 
+                @if($isAdmin)
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-xl border border-sand-200 p-6">
+                        <p class="font-mono text-xs uppercase tracking-widest text-teal-700">Pending Members</p>
+                        <p class="font-display text-4xl font-bold text-ink mt-2">{{ $pendingMemberCount }}</p>
+                        @if($pendingMemberCount > 0)
+                            <a href="{{ route('members.index', ['status' => 'pending']) }}" class="text-sm text-gold-600 hover:text-gold-700 mt-3 inline-block">Review now &rarr;</a>
+                        @else
+                            <p class="text-sm text-sand-500 mt-3">All caught up</p>
+                        @endif
+                    </div>
+                    <div class="bg-white rounded-xl border border-sand-200 p-6">
+                        <p class="font-mono text-xs uppercase tracking-widest text-teal-700">Contributions This Month</p>
+                        <p class="font-display text-4xl font-bold text-ink mt-2">NGN {{ number_format($contributionsThisMonth, 2) }}</p>
+                        <p class="text-sm text-sand-500 mt-3">NGN {{ number_format($contributionsThisYear, 2) }} this year</p>
+                    </div>
+                </div>
+                @endif
+
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white rounded-xl border border-sand-200 p-6">
                         <h3 class="font-display font-semibold text-ink mb-4">Upcoming Events</h3>
@@ -79,3 +98,5 @@
         </div>
     </div>
 </x-app-layout>
+
+

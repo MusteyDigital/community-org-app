@@ -9,6 +9,7 @@ use App\Http\Controllers\PublicOrganizationController;
 use App\Models\Member;
 use App\Models\EventItem;
 use App\Models\Announcement;
+use App\Models\Contribution;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicOrganizationController::class, 'index']);
@@ -20,21 +21,30 @@ Route::get('/dashboard', function () {
     if (! $membership) {
         return view('dashboard', [
             'noOrganization' => true,
+            'isAdmin' => false,
             'memberCount' => 0,
             'upcomingEvents' => collect(),
             'pinnedAnnouncements' => collect(),
             'eventCount' => 0,
             'announcementCount' => 0,
+            'pendingMemberCount' => 0,
+            'contributionsThisMonth' => 0,
+            'contributionsThisYear' => 0,
         ]);
     }
     $orgId = $membership->organization_id;
+    $isAdmin = $membership->role === 'admin';
     return view('dashboard', [
         'noOrganization' => false,
+        'isAdmin' => $isAdmin,
         'memberCount' => Member::where('organization_id', $orgId)->count(),
         'upcomingEvents' => EventItem::where('organization_id', $orgId)->where('event_date', '>=', now())->orderBy('event_date')->take(3)->get(),
         'pinnedAnnouncements' => Announcement::where('organization_id', $orgId)->where('is_pinned', true)->take(3)->get(),
         'eventCount' => EventItem::where('organization_id', $orgId)->count(),
         'announcementCount' => Announcement::where('organization_id', $orgId)->count(),
+        'pendingMemberCount' => $isAdmin ? Member::where('organization_id', $orgId)->where('status', 'pending')->count() : 0,
+        'contributionsThisMonth' => $isAdmin ? Contribution::where('organization_id', $orgId)->whereMonth('contributed_at', now()->month)->whereYear('contributed_at', now()->year)->sum('amount') : 0,
+        'contributionsThisYear' => $isAdmin ? Contribution::where('organization_id', $orgId)->whereYear('contributed_at', now()->year)->sum('amount') : 0,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -74,8 +84,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-
-
-
-

@@ -79,6 +79,8 @@ class OrganizationController extends Controller
             'status' => 'pending',
             'join_date' => now(),
         ]);
-        return redirect()->route('dashboard')->with('status', 'Request sent — waiting for admin approval.');
+        return redirect()->route('dashboard')->with('status', 'Request sent - waiting for admin approval.');
     }
 }
+
+

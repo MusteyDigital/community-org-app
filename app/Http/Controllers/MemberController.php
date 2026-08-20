@@ -25,6 +25,10 @@ class MemberController extends Controller
     {
         $orgId = $this->currentOrgId();
 
+        $perPage = in_array((int) $request->input('per_page'), [5, 10, 25, 50], true)
+            ? (int) $request->input('per_page')
+            : 10;
+
         $members = Member::where('organization_id', $orgId)
             ->when($request->filled('search'), fn ($q) => $q->where(fn ($q2) => $q2
                 ->where('name', 'like', '%'.$request->search.'%')
@@ -33,7 +37,7 @@ class MemberController extends Controller
             ->when($request->filled('role'), fn ($q) => $q->where('role', $request->role))
             ->when($request->filled('status'), fn ($q) => $q->where('status', $request->status))
             ->latest()
-            ->paginate(10)
+            ->paginate($perPage)
             ->withQueryString();
 
         return view('members.index', compact('members'));
@@ -117,7 +121,11 @@ class MemberController extends Controller
     {
         $this->assertIsOrgAdmin();
         abort_unless($member->organization_id === $this->currentOrgId(), 403);
-        $member->update(['status' => 'approved']);
+        $member->update([
+            'status' => 'approved',
+            'approved_by' => Auth::id(),
+            'approved_at' => now(),
+        ]);
         return back()->with('success', "{$member->name} approved.");
     }
 
@@ -133,9 +141,17 @@ class MemberController extends Controller
     {
         $this->assertIsOrgAdmin();
         abort_unless($member->organization_id === $this->currentOrgId(), 403);
-        $member->update(['status' => 'rejected']);
+        $member->update([
+            'status' => 'rejected',
+            'rejected_by' => Auth::id(),
+            'rejected_at' => now(),
+        ]);
         return back()->with('success', "{$member->name} rejected.");
     }
 }
+
+
+
+
 
 

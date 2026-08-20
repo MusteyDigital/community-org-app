@@ -29,7 +29,7 @@
             <h1 class="font-display text-3xl sm:text-5xl font-bold">Run your community, all in one place</h1>
             <p class="text-sand-200 mt-5 max-w-xl mx-auto text-base sm:text-lg">Manage members, share events, and post announcements &mdash; with a public page your community can check anytime, no login required.</p>
             <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="{{ route('register') }}" class="w-full sm:w-auto px-6 py-3 rounded-md bg-gold-500 text-teal-900 font-medium hover:bg-gold-600 transition text-center">Register your organization</a>
+                <a href="{{ route('organizations.create') }}" class="w-full sm:w-auto px-6 py-3 rounded-md bg-gold-500 text-teal-900 font-medium hover:bg-gold-600 transition text-center">Register your organization</a>
                 <a href="{{ url('/browse') }}" class="w-full sm:w-auto px-6 py-3 rounded-md border border-sand-400 text-sand-100 font-medium hover:bg-teal-800 transition text-center">Browse organizations</a>
             </div>
         </div>
@@ -71,3 +71,4 @@
     </footer>
 </body>
 </html>
+
