@@ -90,6 +90,16 @@ class AnnouncementController extends Controller
             } catch (\Throwable $e) {
                 Log::warning('Failed to send announcement notification: '.$e->getMessage());
             }
+
+            $smsService = app(\App\Services\TwilioSmsService::class);
+            foreach ($recipients as $recipient) {
+                if ($recipient->phone) {
+                    $smsService->send(
+                        $recipient->phone,
+                        'New announcement from your organization: '.$announcement->title
+                    );
+                }
+            }
         }
 
         return redirect()->route('announcements.index')->with('success', 'Announcement posted successfully.');
@@ -158,6 +168,7 @@ class AnnouncementController extends Controller
         return redirect()->route('announcements.trashed')->with('success', 'Announcement permanently deleted.');
     }
 }
+
 
 
 
