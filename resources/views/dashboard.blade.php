@@ -6,6 +6,12 @@
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
+            @if (session('status'))
+                <div class="bg-gold-50 border border-gold-300 text-teal-900 rounded-xl px-4 py-3 text-sm">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             <div class="relative overflow-hidden rounded-xl bg-teal-900 text-sand-50 p-8" style="background-image: repeating-linear-gradient(45deg, rgba(201,151,63,0.08) 0px, rgba(201,151,63,0.08) 2px, transparent 2px, transparent 12px);">
                 <p class="font-mono text-sm text-gold-500 uppercase tracking-widest mb-1">Welcome back</p>
                 <h1 class="font-display text-3xl font-bold">{{ Auth::user()->name }}</h1>
@@ -27,6 +33,13 @@
                     </a>
                 </div>
             @else
+
+                <div class="flex justify-end">
+                    <form method="POST" action="{{ route('organizations.leave') }}" onsubmit="return confirm('Are you sure you want to leave this organization? This cannot be undone.');">
+                        @csrf
+                        <button type="submit" class="text-sm text-clay-600 hover:text-clay-700 underline">Leave Organization</button>
+                    </form>
+                </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="bg-white rounded-xl border border-sand-200 p-6">
@@ -98,5 +111,7 @@
         </div>
     </div>
 </x-app-layout>
+
+
 
 

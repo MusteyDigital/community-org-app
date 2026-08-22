@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Organization;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 class OrganizationController extends Controller
 {
     public function index()
@@ -15,7 +12,6 @@ class OrganizationController extends Controller
         $organizations = Organization::approved()->withCount('members')->get();
         return view('organizations.index', compact('organizations'));
     }
-
     public function create()
     {
         $existing = Member::where('user_id', Auth::id())->first();
@@ -24,7 +20,6 @@ class OrganizationController extends Controller
         }
         return view('organizations.create');
     }
-
     public function store(Request $request)
     {
         $existing = Member::where('user_id', Auth::id())->first();
@@ -59,7 +54,6 @@ class OrganizationController extends Controller
         });
         return redirect()->route('dashboard')->with('status', 'Organization submitted for review. You will be notified once approved.');
     }
-
     public function join(Request $request, Organization $organization)
     {
         $existing = Member::where('user_id', Auth::id())->first();
@@ -81,6 +75,22 @@ class OrganizationController extends Controller
         ]);
         return redirect()->route('dashboard')->with('status', 'Request sent - waiting for admin approval.');
     }
+    public function leave(Request $request)
+    {
+        $membership = Member::where('user_id', Auth::id())->first();
+        if (! $membership) {
+            return redirect()->route('dashboard')->with('status', 'You are not part of an organization.');
+        }
+        if ($membership->role === 'admin') {
+            $otherAdmins = Member::where('organization_id', $membership->organization_id)
+                ->where('role', 'admin')
+                ->where('id', '!=', $membership->id)
+                ->exists();
+            if (! $otherAdmins) {
+                return back()->with('status', 'You are the only admin of this organization. Assign another admin before leaving.');
+            }
+        }
+        $membership->delete();
+        return redirect()->route('dashboard')->with('status', 'You have left the organization.');
+    }
 }
-
-

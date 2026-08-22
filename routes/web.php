@@ -76,6 +76,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
     Route::post('/organizations', [OrganizationController::class, 'store'])->name('organizations.store');
     Route::post('/organizations/{organization}/join', [OrganizationController::class, 'join'])->name('organizations.join');
+    Route::post('/organizations/leave', [OrganizationController::class, 'leave'])->name('organizations.leave');
     Route::middleware('super_admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/organizations', [App\Http\Controllers\Admin\OrganizationApprovalController::class, 'index'])->name('organizations.index');
         Route::post('/organizations/{organization}/approve', [App\Http\Controllers\Admin\OrganizationApprovalController::class, 'approve'])->name('organizations.approve');
@@ -87,4 +88,5 @@ Route::get('/auth/google', [App\Http\Controllers\Auth\GoogleController::class, '
 Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'callback'])->name('google.callback');
 
 require __DIR__.'/auth.php';
+
 
