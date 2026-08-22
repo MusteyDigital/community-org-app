@@ -66,6 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/announcements/{id}/restore', [AnnouncementController::class, 'restore'])->name('announcements.restore');
     Route::delete('/announcements/{id}/force-delete', [AnnouncementController::class, 'forceDelete'])->name('announcements.forceDelete');
     Route::resource('contributions', App\Http\Controllers\ContributionController::class)->except(['show']);
+    Route::get('/contributions/{contribution}/receipt', [App\Http\Controllers\ContributionController::class, 'receipt'])->name('contributions.receipt');
     Route::get('/contributions/pay/start', [App\Http\Controllers\PaystackController::class, 'pay'])->name('paystack.pay');
     Route::post('/contributions/pay/initialize', [App\Http\Controllers\PaystackController::class, 'initialize'])->name('paystack.initialize');
     Route::get('/contributions/pay/callback', [App\Http\Controllers\PaystackController::class, 'callback'])->name('paystack.callback');
@@ -88,5 +89,6 @@ Route::get('/auth/google', [App\Http\Controllers\Auth\GoogleController::class, '
 Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'callback'])->name('google.callback');
 
 require __DIR__.'/auth.php';
+
 
 

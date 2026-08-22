@@ -1,4 +1,4 @@
-﻿<x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-display font-semibold text-xl text-ink">Contributions</h2>
     </x-slot>
@@ -31,6 +31,7 @@
                             <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Amount</th>
                             <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Category</th>
                             <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Date</th>
+                            <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Receipt</th>
                             @if($isAdmin)
                                 <th class="py-2 pr-4 font-mono text-xs uppercase tracking-widest text-teal-700 whitespace-nowrap">Actions</th>
                             @endif
@@ -40,11 +41,14 @@
                         @forelse($contributions as $contribution)
                         <tr class="border-b border-sand-100">
                             @if($isAdmin)
-                                <td class="py-3 pr-4 text-ink font-medium whitespace-nowrap">{{ $contribution->member->name ?? '—' }}</td>
+                                <td class="py-3 pr-4 text-ink font-medium whitespace-nowrap">{{ $contribution->member->name ?? 'Ã¢â‚¬â€' }}</td>
                             @endif
                             <td class="py-3 pr-4 font-mono text-sm text-ink whitespace-nowrap">&#8358;{{ number_format($contribution->amount, 2) }}</td>
                             <td class="py-3 pr-4 whitespace-nowrap"><span class="text-xs px-2 py-1 rounded-full bg-teal-800/10 text-teal-800">{{ ucfirst($contribution->category) }}</span></td>
                             <td class="py-3 pr-4 font-mono text-sm text-ink whitespace-nowrap">{{ $contribution->contributed_at->format('M j, Y') }}</td>
+                            <td class="py-3 pr-4 whitespace-nowrap">
+                                <a href="{{ route('contributions.receipt', $contribution) }}" class="text-teal-700 hover:text-teal-900 font-medium">Download</a>
+                            </td>
                             @if($isAdmin)
                                 <td class="py-3 whitespace-nowrap">
                                     <a href="{{ route('contributions.edit', $contribution) }}" class="text-teal-700 hover:text-teal-900 font-medium">Edit</a>
@@ -56,7 +60,7 @@
                             @endif
                         </tr>
                         @empty
-                        <tr><td colspan="{{ $isAdmin ? 5 : 3 }}" class="py-6 text-sand-500">No contributions recorded yet.</td></tr>
+                        <tr><td colspan="{{ $isAdmin ? 6 : 4 }}" class="py-6 text-sand-500">No contributions recorded yet.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -66,4 +70,7 @@
         </div>
     </div>
 </x-app-layout>
+
+
+
 

@@ -6,6 +6,7 @@ use App\Models\Contribution;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ContributionController extends Controller
 {
@@ -133,8 +134,21 @@ class ContributionController extends Controller
 
         return redirect()->route('contributions.index')->with('success', 'Contribution deleted.');
     }
+
+    public function receipt(Contribution $contribution)
+    {
+        $membership = $this->currentMembership();
+
+        abort_unless($contribution->organization_id === $membership->organization_id, 403);
+
+        if ($membership->role !== 'admin') {
+            abort_unless($contribution->member_id === $membership->id, 403, 'You can only download receipts for your own contributions.');
+        }
+
+        $contribution->load('member', 'organization');
+
+        $pdf = Pdf::loadView('contributions.receipt', compact('contribution'));
+
+        return $pdf->download('receipt-'.$contribution->id.'.pdf');
+    }
 }
-
-
-
-
